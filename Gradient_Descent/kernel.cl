@@ -6,13 +6,12 @@ __kernel void gradient_descent(__global float4* x, __global float4* y, __global 
 	float4 Y=y[global_addr];
 	//X.s0=0.98f;
 	float2 Th;
-	printf("in=<%f,%f>\n",X.s0,X.s1);
-
+	float2 sum;
 
 	float alpha=0.01f;
 	float Theta[2];
 	
-	for(int i=0;i<1000;i++){
+	for(int i=0;i<20000;i++){
 	Th=th[0];
 	Theta[0]=Th.s0;
 	Theta[1]=Th.s1;
@@ -23,20 +22,14 @@ __kernel void gradient_descent(__global float4* x, __global float4* y, __global 
 	h_theta.s3=Theta[0]+Theta[1]*X.s3;
 
 	float4 diff=h_theta - Y;
-	//printf("v=<%f,%f>\n",t[local_addr].s0,t[local_addr].s1);
 	
 	float4 temp[2];
 	temp[0]=diff*1;
 	temp[1]=diff*X;
-	//printf("temp=<%f,%f,%f>\n",temp[1].s0,diff.s0,X.s0);
 	t[local_addr].s0=temp[0].s0+temp[0].s1+temp[0].s2+temp[0].s3;
 	t[local_addr].s1=temp[1].s0+temp[1].s1+temp[1].s2+temp[1].s3;
-	//printf("out=<%f,%f>\n",t[local_addr].s0,t[local_addr].s1);
 
 	barrier(CLK_LOCAL_MEM_FENCE);
-	float2 sum;
-
-
 
 		if(get_local_id(0) == 0){
 			sum.s0=0;

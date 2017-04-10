@@ -58,7 +58,7 @@ int main(){
 	for(cl::Platform a: all_platforms){
 		cout<<a.getInfo<CL_PLATFORM_NAME>()<<"\n";;
 	}
-	cl::Platform default_platform=all_platforms.at(0);
+	cl::Platform default_platform=all_platforms.at(1);
 	cout<<"Using Platform:"<<default_platform.getInfo<CL_PLATFORM_VERSION>()<<"\n";
 	
 	///////////Finding Devices////////////////////////
@@ -154,7 +154,7 @@ int main(){
 	string th1=ss.str();
 	string th0=ss2.str();
 	comm+=th1;
-	comm+="*x ";
+	comm+="*x+";
 	comm+=th0;
 	comm+=" , ";
 	comm+="'data.txt' using 1:2\n";
